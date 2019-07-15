@@ -13,6 +13,8 @@ getrlimit
 
 
 
+typedef char bool;
+
 
 struct s_header_page {
     struct s_header_page *prev;
@@ -31,16 +33,16 @@ struct s_malloc_root {
 
 typedef struct s_malloc_root malloc_root;
 
-struct s_data_payload {
+struct s_header_data {
     header_page *prev;
     header_page *next;
     size_t size;
 };
 
-typedef struct s_data_payload data_payload;
+typedef struct s_header_data header_data;
 
 
-
+extern malloc_root g_state;
 
 // ---
 
@@ -58,6 +60,9 @@ void *valloc(size_t size);
 
 void show_alloc_mem();
 
+size_t tiny_max_size();
+
+size_t small_max_size();
 
 // ---
 
