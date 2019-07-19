@@ -1,7 +1,15 @@
 #include <zconf.h>
 #include "malloc.h"
 
+static void *ft_malloc_data(size_t size, t_header_data *d) {
+
+}
+
 static void *ft_malloc_page(size_t size, t_header_page *h) {
+    t_header_data *d = h + 1;
+
+
+
 
 }
 

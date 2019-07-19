@@ -10,6 +10,7 @@ void *realloc(void *ptr, size_t size) {
     pi--;
 
     if (pi->size == align) return ptr;
+    // check if libre ->
 
     void *new_mem = malloc(align);
     if (new_mem == NULL) return NULL;

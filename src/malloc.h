@@ -11,6 +11,9 @@ getpagesize
 getrlimit
 */
 
+// TODO
+#define PAGE_TINY_SIZE (getpagesize() * getpagesize() / 128)
+#define PAGE_SMALL_SIZE (getpagesize() * getpagesize())
 #define LEN_LARGES 4096
 
 typedef char t_bool;
@@ -41,7 +44,8 @@ typedef struct s_malloc_root t_malloc_root;
 struct s_header_data {
     struct s_header_data *prev;
     struct s_header_data *next;
-    size_t size;
+    size_t size:63;
+    char is_free:1;
 };
 
 typedef struct s_header_data t_header_data;

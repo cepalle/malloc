@@ -13,12 +13,14 @@ size_t ft_align_size(size_t n) {
 }
 
 size_t ft_tiny_max_size() {
-    return getpagesize() - sizeof(t_header_data) - sizeof(t_header_page);
+    return getpagesize() - sizeof(t_header_data) - sizeof(t_header_page); // TODO
 }
 
 size_t ft_small_max_size() {
-    return (getpagesize() * getpagesize()) - sizeof(t_header_data) - sizeof(t_header_page);
+    return (getpagesize() * getpagesize()) - sizeof(t_header_data) - sizeof(t_header_page); // TODO
 }
+
+// --- LIBFT
 
 void ft_bzero(void *s, size_t n) {
     size_t i;
