@@ -2,7 +2,7 @@
 #define MALLOC_MALLOC_H
 
 #include <stdlib.h>
-
+#include <sys/mman.h>
 
 /*
 mmap
@@ -11,9 +11,16 @@ getpagesize
 getrlimit
 */
 
-
+#define LEN_LARGES 4096
 
 typedef char bool;
+
+struct s_mem_large {
+    void *ptr;
+    size_t len;
+};
+
+typedef struct s_mem_large t_mem_large;
 
 struct s_header_page {
     struct s_header_page *prev;
@@ -26,7 +33,7 @@ typedef struct s_header_page t_header_page;
 struct s_malloc_root {
     t_header_page *tiny;
     t_header_page *small;
-    t_header_page *large;
+    t_mem_large larges[LEN_LARGES];
 };
 
 typedef struct s_malloc_root t_malloc_root;

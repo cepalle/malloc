@@ -13,11 +13,11 @@ size_t align_size(size_t n) {
 }
 
 size_t tiny_max_size() {
-    return getpagesize() - sizeof(t_header_data);
+    return getpagesize() - sizeof(t_header_data) - sizeof(t_header_page);
 }
 
 size_t small_max_size() {
-    return getpagesize() * getpagesize() - sizeof(t_header_data);
+    return (getpagesize() * getpagesize()) - sizeof(t_header_data) - sizeof(t_header_page);
 }
 
 void ft_bzero(void *s, size_t n) {
