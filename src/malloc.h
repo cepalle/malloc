@@ -67,9 +67,9 @@ size_t small_max_size();
 
 void ft_bzero(void *ptr, size_t len);
 
-inline size_t ft_min(size_t a, size_t b);
+size_t ft_min(size_t a, size_t b);
 
-inline size_t ft_max(size_t a, size_t b);
+size_t ft_max(size_t a, size_t b);
 
 void *ft_memmove(void *dst, const void *src, size_t len);
 

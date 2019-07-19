@@ -2,7 +2,7 @@
 
 
 void free_in_header(void *ptr, t_header_page *h) {
-
+    if (h == NULL) return;
 }
 
 void free(void *ptr) {
