@@ -2,7 +2,7 @@
 #include "malloc.h"
 
 
-size_t align_size(size_t n) {
+size_t ft_align_size(size_t n) {
     size_t lens = sizeof(size_t);
 
     if (n % lens) {
@@ -12,11 +12,11 @@ size_t align_size(size_t n) {
     }
 }
 
-size_t tiny_max_size() {
+size_t ft_tiny_max_size() {
     return getpagesize() - sizeof(t_header_data) - sizeof(t_header_page);
 }
 
-size_t small_max_size() {
+size_t ft_small_max_size() {
     return (getpagesize() * getpagesize()) - sizeof(t_header_data) - sizeof(t_header_page);
 }
 

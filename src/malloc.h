@@ -13,7 +13,7 @@ getrlimit
 
 #define LEN_LARGES 4096
 
-typedef char bool;
+typedef char t_bool;
 
 struct s_mem_large {
     void *ptr;
@@ -66,11 +66,11 @@ void show_alloc_mem();
 
 // --- UTIL
 
-size_t align_size(size_t n);
+size_t ft_align_size(size_t n);
 
-size_t tiny_max_size();
+size_t ft_tiny_max_size();
 
-size_t small_max_size();
+size_t ft_small_max_size();
 
 void ft_bzero(void *ptr, size_t len);
 
