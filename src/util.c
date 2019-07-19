@@ -76,3 +76,7 @@ inline size_t ft_min(size_t a, size_t b) {
 inline size_t ft_max(size_t a, size_t b) {
     return a > b ? a : b;
 }
+
+void *ft_mmap(size_t size) {
+    return mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
+}

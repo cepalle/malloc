@@ -80,4 +80,6 @@ size_t ft_max(size_t a, size_t b);
 
 void *ft_memmove(void *dst, const void *src, size_t len);
 
+void *ft_mmap(size_t size);
+
 #endif //MALLOC_MALLOC_H
