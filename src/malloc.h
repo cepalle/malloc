@@ -15,34 +15,31 @@ getrlimit
 
 typedef char bool;
 
-
 struct s_header_page {
     struct s_header_page *prev;
     struct s_header_page *next;
-    struct s_data_payload *data;
     size_t size;
 };
 
-typedef struct s_header_page header_page;
+typedef struct s_header_page t_header_page;
 
 struct s_malloc_root {
-    header_page *tiny;
-    header_page *small;
-    header_page *large;
+    t_header_page *tiny;
+    t_header_page *small;
+    t_header_page *large;
 };
 
-typedef struct s_malloc_root malloc_root;
+typedef struct s_malloc_root t_malloc_root;
 
 struct s_header_data {
-    header_page *prev;
-    header_page *next;
+    struct s_header_data *prev;
+    struct s_header_data *next;
     size_t size;
 };
 
-typedef struct s_header_data header_data;
+typedef struct s_header_data t_header_data;
 
-
-extern malloc_root g_state;
+extern t_malloc_root g_state;
 
 // ---
 
@@ -60,14 +57,20 @@ void *valloc(size_t size);
 
 void show_alloc_mem();
 
+// --- UTIL
+
+size_t align_size(size_t n);
+
 size_t tiny_max_size();
 
 size_t small_max_size();
 
-// ---
+void ft_bzero(void *ptr, size_t len);
 
+inline size_t ft_min(size_t a, size_t b);
 
-size_t align_size(size_t n);
+inline size_t ft_max(size_t a, size_t b);
 
+void *ft_memmove(void *dst, const void *src, size_t len);
 
 #endif //MALLOC_MALLOC_H

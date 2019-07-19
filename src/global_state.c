@@ -1,7 +1,7 @@
 #include "malloc.h"
 
 
-malloc_root g_state = {
+t_malloc_root g_state = {
         NULL,
         NULL,
         NULL

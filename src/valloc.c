@@ -2,5 +2,5 @@
 
 
 void *valloc(size_t size) {
-
+    return malloc(size);
 }
