@@ -10,6 +10,12 @@ SRC = src/calloc.c\
 
 FLAGS= -Wall -Wextra
 
+# nm malloc.so
+# setenv DYLD_LIBRARY_PATH .
+# setenv DYLD_INSERT_LIBRARIES malloc.so
+# setenv DYLD_FORCE_FLAT_NAMESPACE 1
+
+
 all:
 	gcc -shared -o malloc.so $(FLAGS) $(SRC)
 
