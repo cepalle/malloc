@@ -11,12 +11,13 @@ getpagesize
 getrlimit
 */
 
-#define PAGE_TINY_SIZE         (1024*1024)
+#define PAGE_TINY_SIZE         (1024*1024*2)
 #define PAGE_TINY_RES          16
 #define PAGE_TINY_DATA_SIZE    (1024 - sizeof(t_header) - PAGE_TINY_RES + 1)
+
 #define PAGE_SMALL_SIZE        (4096 * 4096)
 #define PAGE_SMALL_RES         512
-#define PAGE_SMALL_DATA_SIZE   (4096 * 8 - sizeof(t_header) - PAGE_SMALL_RES + 1)
+#define PAGE_SMALL_DATA_SIZE   (4096 * 2 - sizeof(t_header) - PAGE_SMALL_RES + 1)
 
 #define ENUM_PAGE_SIZE_TINY    0
 #define ENUM_PAGE_SIZE_SMALL   1
