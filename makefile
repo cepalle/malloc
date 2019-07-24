@@ -15,6 +15,7 @@ FLAGS= -Wall -Wextra -fPIC
 # setenv DYLD_INSERT_LIBRARIES malloc.so
 # setenv DYLD_FORCE_FLAT_NAMESPACE 1
 
+# export LD_PRELOAD=./libft_malloc.so
 
 all:
 	gcc -shared -o libft_malloc.so $(FLAGS) $(SRC)

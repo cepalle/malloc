@@ -170,7 +170,7 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 }
 
 void *malloc(size_t size) {
-	write(1, "MALLOC\n", 7);
+	// write(1, "MALLOC\n", 7);
 
 	if (size <= PAGE_TINY_DATA_SIZE) {
 		return ft_malloc_tiny(
