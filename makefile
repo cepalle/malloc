@@ -8,7 +8,7 @@ SRC = src/calloc.c\
     src/util.c\
     src/valloc.c
 
-FLAGS= -Wall -Wextra
+FLAGS= -Wall -Wextra -fPIC
 
 # nm malloc.so
 # setenv DYLD_LIBRARY_PATH .

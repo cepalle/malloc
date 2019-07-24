@@ -34,9 +34,8 @@ typedef struct s_mem_large t_mem_large;
 struct s_header {
 	struct s_header *next;
 	struct s_header *prev;
-	size_t size:60;
+	size_t size:61;
 	t_bool is_free:1;
-	t_bool is_page:1;
 	t_bool enum_page_size:2;
 };
 
