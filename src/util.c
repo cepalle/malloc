@@ -74,7 +74,8 @@ void *ft_mmap(size_t size) {
 }
 
 void *ft_move_ptr(void *ptr, size_t len) {
-	return ptr + len;
+	unsigned char *it = ptr;
+	return it + len;
 }
 
 void ft_putchar_fd(char c, int fd) {
