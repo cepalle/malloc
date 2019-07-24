@@ -76,3 +76,42 @@ void *ft_mmap(size_t size) {
 void *ft_move_ptr(void *ptr, size_t len) {
 	return ptr + len;
 }
+
+void ft_putchar_fd(char c, int fd) {
+	write(fd, &c, 1);
+}
+
+static void ft_putnbr_fd_aux(int n, int fd) {
+	if (n > 9)
+		ft_putnbr_fd_aux(n / 10, fd);
+	ft_putchar_fd(n % 10 + '0', fd);
+}
+
+void ft_putnbr_fd(int n, int fd) {
+	if (n == -2147483648) {
+		ft_putchar_fd('-', fd);
+		ft_putchar_fd('2', fd);
+		n = 147483648;
+	}
+	if (n < 0) {
+		ft_putchar_fd('-', fd);
+		n = -n;
+	}
+	ft_putnbr_fd_aux(n, fd);
+}
+
+void ft_putnbr(int n) {
+	ft_putnbr_fd(n, 1);
+}
+
+void ft_putstr_fd(char const *s, int fd) {
+	if (!s) return;
+	while (*s) {
+		ft_putchar_fd(*s, fd);
+		s++;
+	}
+}
+
+void ft_putstr(char const *s) {
+	ft_putstr_fd(s, 1);
+}

@@ -1,7 +1,10 @@
+#include <unistd.h>
 #include "malloc.h"
 
 
 void *calloc(size_t count, size_t size) {
+	write(1, "CALLOC\n", 7);
+
 	t_header *mem = malloc(size * count);
 	if (mem == NULL) return NULL;
 

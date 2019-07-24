@@ -5,6 +5,8 @@
 // --- TINY
 
 static void *ft_malloc_data_tiny(size_t size, t_header *hp) {
+	if (hp == NULL) return NULL;
+
 	t_header *hdi = hp + 1;
 
 	while (hdi != NULL) {
@@ -51,6 +53,8 @@ static void *ft_malloc_page_tiny() {
 }
 
 static void *ft_malloc_tiny(size_t size, t_header **h) {
+	write(1, "MALLOC_TINY\n", 13);
+
 	if (*h == NULL) {
 		*h = ft_malloc_page_tiny();
 	}
@@ -64,6 +68,7 @@ static void *ft_malloc_tiny(size_t size, t_header **h) {
 
 		if (hpi->next == NULL) {
 			hpi->next = ft_malloc_page_tiny();
+			if (hpi->next == NULL) return NULL;
 		}
 		hpi = hpi->next;
 	}
@@ -72,6 +77,8 @@ static void *ft_malloc_tiny(size_t size, t_header **h) {
 // --- SMALL
 
 static void *ft_malloc_data_small(size_t size, t_header *hp) {
+	if (hp == NULL) return NULL;
+
 	t_header *hdi = hp + 1;
 
 	while (hdi != NULL) {
@@ -118,6 +125,8 @@ static void *ft_malloc_page_small() {
 }
 
 static void *ft_malloc_small(size_t size, t_header **h) {
+	write(1, "MALLOC_SMALL\n", 13);
+
 	if (*h == NULL) {
 		*h = ft_malloc_page_small();
 	}
@@ -131,6 +140,7 @@ static void *ft_malloc_small(size_t size, t_header **h) {
 
 		if (hpi->next == NULL) {
 			hpi->next = ft_malloc_page_small();
+			if (hpi->next == NULL) return NULL;
 		}
 		hpi = hpi->next;
 	}
@@ -153,6 +163,8 @@ static void *ft_malloc_large_page(size_t size) {
 }
 
 static void *ft_malloc_large(size_t size, t_header **h) {
+	write(1, "MALLOC_LARGE\n", 13);
+
 	t_header *new_page = ft_malloc_large_page(size);
 	if (new_page == NULL) return NULL;
 
@@ -160,7 +172,7 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 		*h = new_page;
 	} else {
 		t_header *it = *h;
-		while (it->next) {
+		while (it->next != NULL) {
 			it = it->next;
 		}
 		it->next = new_page;
@@ -170,7 +182,7 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 }
 
 void *malloc(size_t size) {
-	// write(1, "MALLOC\n", 7);
+	write(1, "MALLOC\n", 7);
 
 	if (size <= PAGE_TINY_DATA_SIZE) {
 		return ft_malloc_tiny(

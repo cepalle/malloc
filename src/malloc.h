@@ -27,9 +27,9 @@ typedef struct s_mem_large t_mem_large;
 struct s_header {
 	struct s_header *next;
 	struct s_header *prev;
-	size_t size:61;
-	t_bool is_free:1;
-	t_bool enum_page_size:2;
+	size_t size;
+	t_bool is_free;
+	unsigned char enum_page_size;
 };
 
 typedef struct s_header t_header;
@@ -81,5 +81,11 @@ void *ft_memmove(void *dst, const void *src, size_t len);
 void *ft_mmap(size_t size);
 
 void *ft_move_ptr(void *ptr, size_t len);
+
+void ft_putnbr_fd(int n, int fd);
+
+void ft_putstr(char const *s);
+
+void ft_putnbr(int n);
 
 #endif //MALLOC_MALLOC_H
