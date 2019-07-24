@@ -3,7 +3,7 @@
 
 
 void *realloc(void *ptr, size_t size) {
-	// write(1, "REALLOC\n", 8);
+	write(1, "REALLOC\n", 8);
 
 	if (ptr == NULL) return malloc(size);
 
@@ -14,6 +14,7 @@ void *realloc(void *ptr, size_t size) {
 
 	if (hd->next != NULL && hd->next->is_free) {
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
+		hd->next = hd->next->next;
 	}
 
 	if (hd->size >= size) return ptr;
