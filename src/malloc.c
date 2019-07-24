@@ -28,7 +28,7 @@ static void *ft_malloc_large(size_t size) {
 }
 
 void *malloc(size_t size) {
-    size_t align = ft_align_size(size);
+    size_t align = ft_align_size_tiny(size);
 
     if (align <= ft_tiny_max_size()) {
         return ft_malloc_page(align, g_state.tiny);

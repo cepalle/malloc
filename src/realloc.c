@@ -2,7 +2,7 @@
 
 
 void *realloc(void *ptr, size_t size) {
-    size_t align = ft_align_size(size);
+    size_t align = ft_align_size_tiny(size);
 
     if (ptr == NULL) return malloc(align);
 

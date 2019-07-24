@@ -12,16 +12,6 @@ void free(void *ptr) {
 
     size_t i = 0;
 
-    while (i < LEN_LARGES) {
-        if (g_state.larges[i].ptr == ptr) {
-            munmap(g_state.larges[i].ptr, g_state.larges[i].len);
-            g_state.larges[i].len = 0;
-            g_state.larges[i].ptr = NULL;
-            return;
-        }
-        i++;
-    }
-
     t_header_data *pi = ptr;
     pi--;
 

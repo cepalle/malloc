@@ -11,41 +11,42 @@ getpagesize
 getrlimit
 */
 
-// TODO
-#define PAGE_TINY_SIZE (getpagesize() * getpagesize() / 128)
-#define PAGE_SMALL_SIZE (getpagesize() * getpagesize())
-#define LEN_LARGES 4096
+#define PAGE_TINY_SIZE         (1024*1024)
+#define PAGE_TINY_RES          16
+#define PAGE_TINY_DATA_SIZE    16
+#define PAGE_SMALL_SIZE        (4096 * 4096)
+#define PAGE_SMALL_RES         512
+#define PAGE_SMALL_DATA_SIZE   512
+
+#define ENUM_PAGE_SIZE_TINY    0
+#define ENUM_PAGE_SIZE_SMALL   1
+#define ENUM_PAGE_SIZE_LARGE   2
 
 typedef char t_bool;
-
-struct s_mem_large {
-    void *ptr;
-    size_t len;
-};
 
 typedef struct s_mem_large t_mem_large;
 
 struct s_header_page {
-    struct s_header_page *prev;
-    struct s_header_page *next;
-    size_t size;
+	struct s_header_page *prev;
+	struct s_header_page *next;
+	size_t size:62;
+	t_bool enum_page_size:2;
 };
 
 typedef struct s_header_page t_header_page;
 
 struct s_malloc_root {
-    t_header_page *tiny;
-    t_header_page *small;
-    t_mem_large larges[LEN_LARGES];
+	t_header_page *tiny;
+	t_header_page *small;
 };
 
 typedef struct s_malloc_root t_malloc_root;
 
 struct s_header_data {
-    struct s_header_data *prev;
-    struct s_header_data *next;
-    size_t size:63;
-    char is_free:1;
+	struct s_header_data *prev;
+	struct s_header_data *next;
+	size_t size:63;
+	t_bool is_free:1;
 };
 
 typedef struct s_header_data t_header_data;
@@ -70,7 +71,7 @@ void show_alloc_mem();
 
 // --- UTIL
 
-size_t ft_align_size(size_t n);
+size_t ft_align_size(size_t n, size_t al);
 
 size_t ft_tiny_max_size();
 
