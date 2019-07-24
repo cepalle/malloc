@@ -5,36 +5,33 @@ static void *ft_malloc_data(size_t size, t_header_data *d) {
 
 }
 
-static void *ft_malloc_page(size_t size, t_header_page *h) {
-    t_header_data *d = h + 1;
-
-
+static void *ft_malloc(size_t size, t_header *h) {
+	t_header *d = h + 1;
 
 
 }
 
 static void *ft_malloc_large(size_t size) {
-    void *new_mem = ft_mmap(size);
-    size_t i = 0;
-    while (i < LEN_LARGES) {
-        if (g_state.larges[i].ptr == NULL) {
-            g_state.larges[i].ptr = new_mem;
-            g_state.larges[i].len = size;
-            return new_mem;
-        }
-        i++;
-    }
-    return NULL;
+	size_t align = ft_align_size(size + sizeof(t_header), 4096);
+	t_header *new_mem = ft_mmap(align);
+	if (new_mem == NULL) return NULL;
+
+	new_mem->next = NULL;
+	new_mem->prev = NULL;
+	new_mem->size = align - sizeof(t_header);
+	new_mem->is_free = FALSE;
+	new_mem->is_page = TRUE;
+	new_mem->enum_page_size = ENUM_PAGE_SIZE_LARGE;
+
+	return new_mem;
 }
 
 void *malloc(size_t size) {
-    size_t align = ft_align_size_tiny(size);
-
-    if (align <= ft_tiny_max_size()) {
-        return ft_malloc_page(align, g_state.tiny);
-    } else if (align <= ft_small_max_size()) {
-        return ft_malloc_page(align, g_state.small);
-    } else {
-        return ft_malloc_large(align);
-    }
+	if (size <= PAGE_TINY_DATA_SIZE) {
+		return ft_malloc(ft_align_size(size, PAGE_TINY_RES), g_state.tiny);
+	} else if (size <= PAGE_SMALL_DATA_SIZE) {
+		return ft_malloc(ft_align_size(size, PAGE_SMALL_RES), g_state.small);
+	} else {
+		return ft_malloc_large(size);
+	}
 }

@@ -2,11 +2,9 @@
 
 
 void *calloc(size_t count, size_t size) {
-    size_t align = ft_align_size_tiny(size * count);
+	t_header *mem = malloc(size * count);
+	if (mem == NULL) return NULL;
 
-    unsigned char *mem = malloc(align);
-    if (mem == NULL) return NULL;
-
-    ft_bzero(mem, align);
-    return mem;
+	ft_bzero(mem, (mem - 1)->size);
+	return mem;
 }

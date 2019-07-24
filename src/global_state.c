@@ -2,12 +2,9 @@
 
 
 t_malloc_root g_state = {
-        NULL,
-        NULL,
-        {
-                {0, 0},
-                {0, 0}
-        }
+		NULL,
+		NULL,
+		NULL,
 };
 
 void show_alloc_mem() {

@@ -1,23 +1,24 @@
 #include "malloc.h"
 
 
-static void ft_free_in_header(void *ptr, t_header_page *h) {
-    if (h == NULL) return;
+static void ft_free_in_header(void *ptr, t_header *h) {
+	if (h == NULL || ptr == NULL) return;
 
 
 }
 
 void free(void *ptr) {
-    if (ptr == NULL) return;
+	if (ptr == NULL) return;
 
-    size_t i = 0;
+	t_header *pi = ptr;
+	pi--;
 
-    t_header_data *pi = ptr;
-    pi--;
-
-    if (pi->size <= ft_tiny_max_size()) {
-        ft_free_in_header(ptr, g_state.tiny);
-    } else if (pi->size <= ft_small_max_size()) {
-        ft_free_in_header(ptr, g_state.small);
-    }
+	if (pi->enum_page_size == ENUM_PAGE_SIZE_LARGE) {
+		// TODO
+		munmap(pi, pi->size + sizeof(t_header));
+	} else if (pi->enum_page_size == ENUM_PAGE_SIZE_SMALL) {
+		ft_free_in_header(ptr, g_state.small);
+	} else {
+		ft_free_in_header(ptr, g_state.tiny);
+	}
 }

@@ -2,19 +2,17 @@
 
 
 void *realloc(void *ptr, size_t size) {
-    size_t align = ft_align_size_tiny(size);
+	if (ptr == NULL) return malloc(size);
 
-    if (ptr == NULL) return malloc(align);
+	t_header *pi = ptr;
+	pi--;
 
-    t_header_data *pi = ptr;
-    pi--;
+	if (pi->size >= size) return ptr;
+	// check if libre ->
 
-    if (pi->size == align) return ptr;
-    // check if libre ->
+	void *new_mem = malloc(size);
+	if (new_mem == NULL) return NULL;
 
-    void *new_mem = malloc(align);
-    if (new_mem == NULL) return NULL;
-
-    ft_memmove(new_mem, pi + 1, ft_min(pi->size, align));
-    return new_mem;
+	ft_memmove(new_mem, pi + 1, ft_min(pi->size, size));
+	return new_mem;
 }
