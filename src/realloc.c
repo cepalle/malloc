@@ -4,15 +4,20 @@
 void *realloc(void *ptr, size_t size) {
 	if (ptr == NULL) return malloc(size);
 
-	t_header *pi = ptr;
-	pi--;
+	t_header *hd = ptr;
+	hd--;
 
-	if (pi->size >= size) return ptr;
-	// check if libre ->
+	if (hd->size >= size) return ptr;
+
+	if (hd->next != NULL && hd->next->is_free) {
+		hd->size = hd->size + hd->next->size + sizeof(t_header);
+	}
+
+	if (hd->size >= size) return ptr;
 
 	void *new_mem = malloc(size);
 	if (new_mem == NULL) return NULL;
 
-	ft_memmove(new_mem, pi + 1, ft_min(pi->size, size));
+	ft_memmove(new_mem, hd + 1, ft_min(hd->size, size));
 	return new_mem;
 }
