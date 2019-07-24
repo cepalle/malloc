@@ -2,7 +2,7 @@
 
 
 static void ft_free(t_header *ptr, t_header **h) {
-	if (h == NULL || ptr == NULL) return;
+	if (*h == NULL || ptr == NULL) return;
 
 
 }
@@ -10,22 +10,15 @@ static void ft_free(t_header *ptr, t_header **h) {
 // --- LARGE
 
 static void ft_free_large(t_header *pf, t_header **h) {
-	if (*h == NULL) return;
+	if (*h == NULL || pf == NULL) return;
 
-	t_header *it = *h;
-	while (it != NULL) {
-		if (it == pf) {
-
-			if (it->prev != NULL) {
-				it->prev->next = it->next;
-			} else {
-				*h = it->next;
-			}
-
-			munmap(pf, pf->size + sizeof(t_header));
-			return;
-		}
+	if (pf->prev != NULL) {
+		pf->prev->next = pf->next;
+	} else {
+		*h = pf->next;
 	}
+
+	munmap(pf, pf->size + sizeof(t_header));
 }
 
 void free(void *ptr) {
