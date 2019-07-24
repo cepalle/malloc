@@ -4,8 +4,31 @@
 
 // --- TINY
 
-static void *ft_malloc_data_tiny(size_t size, t_header *hd) {
+static void *ft_malloc_data_tiny(size_t size, t_header *hp) {
+	t_header *hdi = hp + 1;
 
+	while (hdi != NULL) {
+		if (hdi->is_free && hdi->size >= size) {
+			if (size + sizeof(t_header) + PAGE_TINY_RES < hdi->size) {
+				t_header *hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
+
+				hdin->next = hdi->next;
+				hdin->prev = hdi;
+				hdin->size = hdi->size - sizeof(t_header) - size;
+				hdin->is_free = TRUE;
+				hdin->is_page = FALSE;
+				hdin->enum_page_size = ENUM_PAGE_SIZE_TINY;
+
+				hdi->size = size;
+				hdi->next = hdin;
+			}
+			hdi->is_free = FALSE;
+			return hdi;
+
+		}
+		hdi = hdi->next;
+	}
+	return NULL;
 }
 
 static void *ft_malloc_page_tiny() {

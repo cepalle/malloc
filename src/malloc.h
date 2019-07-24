@@ -88,4 +88,6 @@ void *ft_memmove(void *dst, const void *src, size_t len);
 
 void *ft_mmap(size_t size);
 
+void *ft_move_ptr(void *ptr, size_t len);
+
 #endif //MALLOC_MALLOC_H

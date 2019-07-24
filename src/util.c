@@ -72,3 +72,7 @@ inline size_t ft_max(size_t a, size_t b) {
 void *ft_mmap(size_t size) {
 	return mmap(NULL, size, PROT_READ | PROT_WRITE, MAP_ANON | MAP_PRIVATE, -1, 0);
 }
+
+void *ft_move_ptr(void *ptr, size_t len) {
+	return ptr + len;
+}
