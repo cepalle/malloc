@@ -4,13 +4,6 @@
 #include <stdlib.h>
 #include <sys/mman.h>
 
-/*
-mmap
-munmap
-getpagesize
-getrlimit
-*/
-
 #define PAGE_TINY_SIZE         (1024*1024*2)
 #define PAGE_TINY_RES          16
 #define PAGE_TINY_DATA_SIZE    (1024 - sizeof(t_header) - PAGE_TINY_RES + 1)

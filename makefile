@@ -17,5 +17,5 @@ FLAGS= -Wall -Wextra -fPIC
 
 
 all:
-	gcc -shared -o malloc.so $(FLAGS) $(SRC)
+	gcc -shared -o libft_malloc.so $(FLAGS) $(SRC)
 
