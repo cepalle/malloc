@@ -3,8 +3,8 @@
 
 
 void *calloc(size_t count, size_t size) {
-	t_header *mem = malloc(size * count);
+	void *mem = malloc(size * count);
 	if (mem == NULL) return NULL;
-	ft_bzero(mem, (mem - 1)->size);
+	ft_bzero(mem, size * count);
 	return mem;
 }
