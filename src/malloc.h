@@ -91,4 +91,6 @@ void ft_putstr(char const *s);
 
 void ft_putnbr(int n);
 
+void ft_putnbr_hex(size_t n);
+
 #endif //MALLOC_MALLOC_H

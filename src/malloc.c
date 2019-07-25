@@ -15,13 +15,14 @@ static void *ft_malloc_data_tiny(size_t size, t_header *hp) {
 				t_header *hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
 
 				hdin->next = hdi->next;
+				hdin->next != NULL && (hdi->next->prev = hdin);
 				hdin->prev = hdi;
+				hdin->prev->next = hdin;
 				hdin->size = hdi->size - sizeof(t_header) - size;
 				hdin->is_free = TRUE;
 				hdin->enum_page_size = ENUM_PAGE_SIZE_TINY;
 
 				hdi->size = size;
-				hdi->next = hdin;
 			}
 			hdi->is_free = FALSE;
 			return hdi;
@@ -53,8 +54,6 @@ static void *ft_malloc_page_tiny() {
 }
 
 static void *ft_malloc_tiny(size_t size, t_header **h) {
-	write(1, "MALLOC_TINY\n", 13);
-
 	if (*h == NULL) {
 		*h = ft_malloc_page_tiny();
 	}
@@ -69,6 +68,7 @@ static void *ft_malloc_tiny(size_t size, t_header **h) {
 		if (hpi->next == NULL) {
 			hpi->next = ft_malloc_page_tiny();
 			if (hpi->next == NULL) return NULL;
+			hpi->next->prev = hpi;
 		}
 		hpi = hpi->next;
 	}
@@ -87,7 +87,9 @@ static void *ft_malloc_data_small(size_t size, t_header *hp) {
 				t_header *hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
 
 				hdin->next = hdi->next;
+				hdin->next != NULL && (hdi->next->prev = hdin);
 				hdin->prev = hdi;
+				hdin->prev->next = hdin;
 				hdin->size = hdi->size - sizeof(t_header) - size;
 				hdin->is_free = TRUE;
 				hdin->enum_page_size = ENUM_PAGE_SIZE_SMALL;
@@ -125,8 +127,6 @@ static void *ft_malloc_page_small() {
 }
 
 static void *ft_malloc_small(size_t size, t_header **h) {
-	write(1, "MALLOC_SMALL\n", 13);
-
 	if (*h == NULL) {
 		*h = ft_malloc_page_small();
 	}
@@ -141,6 +141,7 @@ static void *ft_malloc_small(size_t size, t_header **h) {
 		if (hpi->next == NULL) {
 			hpi->next = ft_malloc_page_small();
 			if (hpi->next == NULL) return NULL;
+			hpi->next->prev = hpi;
 		}
 		hpi = hpi->next;
 	}
@@ -163,8 +164,6 @@ static void *ft_malloc_large_page(size_t size) {
 }
 
 static void *ft_malloc_large(size_t size, t_header **h) {
-	write(1, "MALLOC_LARGE\n", 13);
-
 	t_header *new_page = ft_malloc_large_page(size);
 	if (new_page == NULL) return NULL;
 
@@ -182,12 +181,6 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 }
 
 void *malloc(size_t size) {
-	write(1, "MALLOC\n", 7);
-	ft_putnbr(size);
-	write(1, "\n", 1);
-
-	if (size == 0) return NULL;
-
 	/*
 	if (mutex_need_init) {
 		mutex_need_init = pthread_mutex_init(&lock, NULL);
@@ -214,7 +207,6 @@ void *malloc(size_t size) {
 		);
 	}
 
-	write(1, "MALLOC_END\n", 11);
 	// pthread_mutex_unlock(&lock);
 	return res;
 }

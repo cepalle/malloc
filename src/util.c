@@ -101,6 +101,14 @@ void ft_putnbr_fd(int n, int fd) {
 	ft_putnbr_fd_aux(n, fd);
 }
 
+void ft_putnbr_hex(size_t n) {
+	static char *str = "0123456789ABCDEF";
+	if (n > 15) {
+		ft_putnbr_hex(n / 16);
+	}
+	write(1, str + (n % 16), 1);
+}
+
 void ft_putnbr(int n) {
 	ft_putnbr_fd(n, 1);
 }
