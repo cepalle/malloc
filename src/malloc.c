@@ -15,7 +15,7 @@ static void *ft_malloc_data_tiny(size_t size, t_header *hp) {
 				t_header *hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
 
 				hdin->next = hdi->next;
-				hdin->next != NULL && (hdi->next->prev = hdin);
+				if (hdin->next != NULL) hdi->next->prev = hdin;
 				hdin->prev = hdi;
 				hdin->prev->next = hdin;
 				hdin->size = hdi->size - sizeof(t_header) - size;
@@ -87,7 +87,7 @@ static void *ft_malloc_data_small(size_t size, t_header *hp) {
 				t_header *hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
 
 				hdin->next = hdi->next;
-				hdin->next != NULL && (hdi->next->prev = hdin);
+				if (hdin->next != NULL) hdi->next->prev = hdin;
 				hdin->prev = hdi;
 				hdin->prev->next = hdin;
 				hdin->size = hdi->size - sizeof(t_header) - size;

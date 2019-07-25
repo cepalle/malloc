@@ -7,10 +7,10 @@ static void ft_free_page(t_header *hp, t_header **h) {
 
 	if (hp->prev != NULL) {
 		hp->prev->next = hp->next;
-		hp->next != NULL && (hp->next->prev = hp->prev);
+		if (hp->next != NULL) hp->next->prev = hp->prev;
 	} else {
 		*h = hp->next;
-		hp->next != NULL && (hp->next->prev = NULL);
+		if (hp->next != NULL) hp->next->prev = NULL;
 	}
 
 	munmap(hp, hp->size + sizeof(t_header));
@@ -24,7 +24,7 @@ static void ft_free_data(t_header *hd, t_header **h) {
 	if (hd->next != NULL && hd->next->is_free) {
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
 		hd->next = hd->next->next;
-		hd->next != NULL && (hd->next->prev = hd);
+		if (hd->next != NULL) hd->next->prev = hd;
 
 		if (hd->prev == NULL && hd->next == NULL) {
 			ft_free_page(hd - 1, h);
@@ -35,7 +35,7 @@ static void ft_free_data(t_header *hd, t_header **h) {
 	if (hd->prev != NULL && hd->prev->is_free) {
 		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
 		hd->prev->next = hd->next;
-		hd->next != NULL && (hd->next->prev = hd->prev);
+		if (hd->next != NULL) hd->next->prev = hd->prev;
 
 		if (hd->prev->prev == NULL && hd->prev->next == NULL) {
 			ft_free_page(hd->prev - 1, h);
