@@ -17,7 +17,7 @@ void *realloc(void *ptr, size_t size) {
 	if (hd->enum_page_size != ENUM_PAGE_SIZE_LARGE && hd->next != NULL && hd->next->is_free) {
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
 		hd->next = hd->next->next;
-		hd->next->prev = hd;
+		if (hd->next != NULL) hd->next->prev = hd;
 
 		if (hd->size >= size) return ptr;
 	}
