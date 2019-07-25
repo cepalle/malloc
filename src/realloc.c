@@ -6,6 +6,10 @@ void *realloc(void *ptr, size_t size) {
 	// write(1, "REALLOC\n", 8);
 
 	if (ptr == NULL) return malloc(size);
+	if (size == 0) {
+		free(ptr);
+		return NULL;
+	}
 
 	t_header *hd = ptr;
 	hd--;

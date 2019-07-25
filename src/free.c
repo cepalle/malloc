@@ -2,18 +2,18 @@
 #include "malloc.h"
 
 
-static void ft_free_page(t_header *pf, t_header **h) {
+static void ft_free_page(t_header *hp, t_header **h) {
 	// write(1, "FREE_PAGE\n", 10);
 
-	if (*h == NULL || pf == NULL) return;
+	if (*h == NULL || hp == NULL) return;
 
-	if (pf->prev != NULL) {
-		pf->prev->next = pf->next;
+	if (hp->prev != NULL) {
+		hp->prev->next = hp->next;
 	} else {
-		*h = pf->next;
+		*h = hp->next;
 	}
 
-	munmap(pf, pf->size + sizeof(t_header));
+	munmap(hp, hp->size + sizeof(t_header));
 }
 
 static void ft_free_data(t_header *hd, t_header **h) {
@@ -25,22 +25,24 @@ static void ft_free_data(t_header *hd, t_header **h) {
 	if (hd->next != NULL && hd->next->is_free == TRUE) {
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
 		hd->next = hd->next->next;
+
+		if (hd->prev == NULL && hd->next == NULL) {
+			ft_free_page(hd - 1, h);
+			return;
+		}
 	}
+
 
 	if (hd->prev != NULL && hd->prev->is_free) {
 		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
 		hd->prev->next = hd->next;
+
+		if (hd->prev->prev == NULL && hd->prev->next == NULL) {
+			ft_free_page(hd->prev - 1, h);
+			return;
+		}
 	}
 
-	if (hd->prev == NULL && hd->next == NULL) {
-		ft_free_page(hd - 1, h);
-		return;
-	}
-
-	if (hd->prev != NULL && hd->prev->prev == NULL && hd->prev->next == NULL) {
-		ft_free_page(hd->prev - 1, h);
-		return;
-	}
 }
 
 void free(void *ptr) {
@@ -53,25 +55,25 @@ void free(void *ptr) {
 	*/
 	if (ptr == NULL) return;
 
-	t_header *hp = ptr;
-	hp--;
+	t_header *hdop = ptr;
+	hdop--;
 
-	if (hp->enum_page_size == ENUM_PAGE_SIZE_LARGE) {
+	if (hdop->enum_page_size == ENUM_PAGE_SIZE_LARGE) {
 		// write(1, "FREE_LARGE\n", 11);
 		ft_free_page(
-				hp,
+				hdop,
 				&(g_state.large)
 		);
-	} else if (hp->enum_page_size == ENUM_PAGE_SIZE_SMALL) {
+	} else if (hdop->enum_page_size == ENUM_PAGE_SIZE_SMALL) {
 		// write(1, "FREE_SMALL\n", 11);
 		ft_free_data(
-				hp,
+				hdop,
 				&(g_state.small)
 		);
 	} else {
 		// write(1, "FREE_TINY\n", 10);
 		ft_free_data(
-				hp,
+				hdop,
 				&(g_state.tiny)
 		);
 	}
