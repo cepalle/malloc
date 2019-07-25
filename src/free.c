@@ -3,7 +3,7 @@
 
 
 static void ft_free_page(t_header *hp, t_header **h) {
-	// write(1, "FREE_PAGE\n", 10);
+	write(1, "FREE_PAGE\n", 10);
 
 	if (*h == NULL || hp == NULL) return;
 
@@ -17,7 +17,7 @@ static void ft_free_page(t_header *hp, t_header **h) {
 }
 
 static void ft_free_data(t_header *hd, t_header **h) {
-	// write(1, "FREE_DATA\n", 10);
+	write(1, "FREE_DATA\n", 10);
 
 	if (*h == NULL || hd == NULL || hd->is_free) return;
 
@@ -32,7 +32,6 @@ static void ft_free_data(t_header *hd, t_header **h) {
 		}
 	}
 
-
 	if (hd->prev != NULL && hd->prev->is_free) {
 		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
 		hd->prev->next = hd->next;
@@ -46,7 +45,7 @@ static void ft_free_data(t_header *hd, t_header **h) {
 }
 
 void free(void *ptr) {
-	// write(1, "FREE\n", 5);
+	write(1, "FREE\n", 5);
 	/*
 	if (mutex_need_init) {
 		mutex_need_init = pthread_mutex_init(&lock, NULL);
@@ -59,19 +58,19 @@ void free(void *ptr) {
 	hdop--;
 
 	if (hdop->enum_page_size == ENUM_PAGE_SIZE_LARGE) {
-		// write(1, "FREE_LARGE\n", 11);
+		write(1, "FREE_LARGE\n", 11);
 		ft_free_page(
 				hdop,
 				&(g_state.large)
 		);
 	} else if (hdop->enum_page_size == ENUM_PAGE_SIZE_SMALL) {
-		// write(1, "FREE_SMALL\n", 11);
+		write(1, "FREE_SMALL\n", 11);
 		ft_free_data(
 				hdop,
 				&(g_state.small)
 		);
 	} else {
-		// write(1, "FREE_TINY\n", 10);
+		write(1, "FREE_TINY\n", 10);
 		ft_free_data(
 				hdop,
 				&(g_state.tiny)

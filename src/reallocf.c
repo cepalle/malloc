@@ -3,12 +3,11 @@
 
 
 void *reallocf(void *ptr, size_t size) {
-	// write(1, "REALLOCF\n", 9);
+	write(1, "REALLOCF\n", 9);
 
-    void *new_mem = realloc(ptr, size);
-    if (new_mem == NULL) return NULL;
+	void *new_mem = realloc(ptr, size);
 
-    if (new_mem != ptr) free(ptr);
+	if (new_mem != ptr) free(ptr);
 
-    return new_mem;
+	return new_mem;
 }
