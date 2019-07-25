@@ -175,6 +175,7 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 			it = it->next;
 		}
 		it->next = new_page;
+		it->next->prev = it;
 	}
 
 	return new_page + 1;
