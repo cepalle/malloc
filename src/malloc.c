@@ -53,7 +53,7 @@ static void *ft_malloc_page_tiny() {
 }
 
 static void *ft_malloc_tiny(size_t size, t_header **h) {
-	write(1, "MALLOC_TINY\n", 13);
+	// write(1, "MALLOC_TINY\n", 13);
 
 	if (*h == NULL) {
 		*h = ft_malloc_page_tiny();
@@ -125,7 +125,7 @@ static void *ft_malloc_page_small() {
 }
 
 static void *ft_malloc_small(size_t size, t_header **h) {
-	write(1, "MALLOC_SMALL\n", 13);
+	// write(1, "MALLOC_SMALL\n", 13);
 
 	if (*h == NULL) {
 		*h = ft_malloc_page_small();
@@ -163,7 +163,7 @@ static void *ft_malloc_large_page(size_t size) {
 }
 
 static void *ft_malloc_large(size_t size, t_header **h) {
-	write(1, "MALLOC_LARGE\n", 13);
+	// write(1, "MALLOC_LARGE\n", 13);
 
 	t_header *new_page = ft_malloc_large_page(size);
 	if (new_page == NULL) return NULL;
@@ -182,22 +182,33 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 }
 
 void *malloc(size_t size) {
-	write(1, "MALLOC\n", 7);
+	// write(1, "MALLOC\n", 7);
+	/*
+	if (mutex_need_init) {
+		mutex_need_init = pthread_mutex_init(&lock, NULL);
+	}
+
+	pthread_mutex_lock(&lock);
+	*/
+	void *res = NULL;
 
 	if (size <= PAGE_TINY_DATA_SIZE) {
-		return ft_malloc_tiny(
+		res = ft_malloc_tiny(
 				ft_align_size(size, PAGE_TINY_RES),
 				&(g_state.tiny)
 		);
 	} else if (size <= PAGE_SMALL_DATA_SIZE) {
-		return ft_malloc_small(
+		res = ft_malloc_small(
 				ft_align_size(size, PAGE_SMALL_RES),
 				&(g_state.small)
 		);
 	} else {
-		return ft_malloc_large(
+		res = ft_malloc_large(
 				size,
 				&(g_state.large)
 		);
 	}
+
+	// pthread_mutex_unlock(&lock);
+	return res;
 }

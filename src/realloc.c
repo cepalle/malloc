@@ -3,7 +3,7 @@
 
 
 void *realloc(void *ptr, size_t size) {
-	write(1, "REALLOC\n", 8);
+	// write(1, "REALLOC\n", 8);
 
 	if (ptr == NULL) return malloc(size);
 
