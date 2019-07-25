@@ -214,6 +214,7 @@ void *malloc(size_t size) {
 		);
 	}
 
+	write(1, "MALLOC_END\n", 11);
 	// pthread_mutex_unlock(&lock);
 	return res;
 }

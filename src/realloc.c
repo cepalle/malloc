@@ -28,5 +28,7 @@ void *realloc(void *ptr, size_t size) {
 
 	ft_memmove(new_mem, ptr, ft_min(hd->size, (new_mem - 1)->size));
 	free(ptr);
+
+	write(1, "REALLOC_END\n", 12);
 	return new_mem;
 }

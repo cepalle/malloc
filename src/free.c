@@ -26,22 +26,26 @@ static void ft_free_data(t_header *hd, t_header **h) {
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
 		hd->next = hd->next->next;
 
+		write(1, "FREE_DATA_1\n", 12);
 		if (hd->prev == NULL && hd->next == NULL) {
 			ft_free_page(hd - 1, h);
 			return;
 		}
 	}
 
+	write(1, "FREE_DATA_2\n", 12);
 	if (hd->prev != NULL && hd->prev->is_free) {
 		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
 		hd->prev->next = hd->next;
 
+		write(1, "FREE_DATA_3\n", 12);
 		if (hd->prev->prev == NULL && hd->prev->next == NULL) {
 			ft_free_page(hd->prev - 1, h);
 			return;
 		}
 	}
 
+	write(1, "FREE_DATA_4\n", 12);
 }
 
 void free(void *ptr) {
@@ -77,5 +81,6 @@ void free(void *ptr) {
 		);
 	}
 
+	write(1, "FREE_END\n", 9);
 	// pthread_mutex_unlock(&lock);
 }
