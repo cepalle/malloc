@@ -14,11 +14,27 @@
 #include <zconf.h>
 #include "malloc.h"
 
+static void	ft_malloc_data_small_aux(t_header *hdin, t_header *hdi, size_t size)
+{
+	hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
+	hdin->next = hdi->next;
+	if (hdin->next != NULL)
+		hdi->next->prev = hdin;
+	hdin->prev = hdi;
+	hdin->prev->next = hdin;
+	hdin->size = hdi->size - sizeof(t_header) - size;
+	hdin->is_free = TRUE;
+	hdin->enum_page_size = ENUM_PAGE_SIZE_SMALL;
+	hdi->size = size;
+	hdi->next = hdin;
+}
+
 static void	*ft_malloc_data_small(size_t size, t_header *hp)
 {
 	t_header *hdi;
 	t_header *hdin;
 
+	hdin = NULL;
 	if (hp == NULL)
 		return (NULL);
 	hdi = hp + 1;
@@ -28,17 +44,7 @@ static void	*ft_malloc_data_small(size_t size, t_header *hp)
 		{
 			if (size + sizeof(t_header) + PAGE_SMALL_RES < hdi->size)
 			{
-				hdin = ft_move_ptr(hdi, sizeof(t_header) + size);
-				hdin->next = hdi->next;
-				if (hdin->next != NULL)
-					hdi->next->prev = hdin;
-				hdin->prev = hdi;
-				hdin->prev->next = hdin;
-				hdin->size = hdi->size - sizeof(t_header) - size;
-				hdin->is_free = TRUE;
-				hdin->enum_page_size = ENUM_PAGE_SIZE_SMALL;
-				hdi->size = size;
-				hdi->next = hdin;
+				ft_malloc_data_small_aux(hdin, hdi, size);
 			}
 			hdi->is_free = FALSE;
 			return (hdi);
