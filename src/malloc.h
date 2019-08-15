@@ -78,9 +78,8 @@ void							*ft_memmove(void *dst, const void *src,
 		size_t len);
 void							*ft_mmap(size_t size);
 void							*ft_move_ptr(void *ptr, size_t len);
-void							ft_putnbr_fd(int n, int fd);
-void							ft_putstr(char const *s);
 void							ft_putnbr(int n);
 void							ft_putnbr_hex(size_t n);
+void							ft_putchar_fd(char c, int fd);
 
 #endif

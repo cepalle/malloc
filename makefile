@@ -6,6 +6,8 @@ SRC = src/calloc.c\
     src/realloc.c\
     src/reallocf.c\
     src/util.c\
+    src/util2.c\
+    src/util3.c\
     src/valloc.c
 
 FLAGS= -Wall -Wextra -fPIC
