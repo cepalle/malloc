@@ -10,10 +10,20 @@ SRC = src/calloc.c\
 
 FLAGS= -Wall -Wextra -fPIC
 
+
+
 # nm malloc.so
+
+# LINUX
 # setenv DYLD_LIBRARY_PATH .
 # setenv DYLD_INSERT_LIBRARIES malloc.so
 # setenv DYLD_FORCE_FLAT_NAMESPACE 1
+# export LD_PRELOAD=./libft_malloc.so
+
+# MAC
+# export DYLD_LIBRARY_PATH=.
+# export DYLD_INSERT_LIBRARIES="libft_malloc.so"
+# export DYLD_FORCE_FLAT_NAMESPACE=1
 
 # export LD_PRELOAD=./libft_malloc.so
 

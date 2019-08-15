@@ -3,76 +3,84 @@
 
 
 static void ft_free_page(t_header *hp, t_header **h) {
-	if (*h == NULL || hp == NULL) return;
+    if (*h == NULL || hp == NULL) return;
 
-	if (hp->prev != NULL) {
-		hp->prev->next = hp->next;
-		if (hp->next != NULL) hp->next->prev = hp->prev;
-	} else {
-		*h = hp->next;
-		if (hp->next != NULL) hp->next->prev = NULL;
-	}
+    if (hp->prev != NULL) {
+        hp->prev->next = hp->next;
+        if (hp->next != NULL) hp->next->prev = hp->prev;
+    } else {
+        *h = hp->next;
+        if (hp->next != NULL) hp->next->prev = NULL;
+    }
 
-	munmap(hp, hp->size + sizeof(t_header));
+    munmap(hp, hp->size + sizeof(t_header));
 }
 
 static void ft_free_data(t_header *hd, t_header **h) {
-	if (*h == NULL || hd == NULL || hd->is_free) return;
+    if (*h == NULL || hd == NULL || hd->is_free) return;
 
-	hd->is_free = TRUE;
+    hd->is_free = TRUE;
 
-	if (hd->next != NULL && hd->next->is_free) {
-		hd->size = hd->size + hd->next->size + sizeof(t_header);
-		hd->next = hd->next->next;
-		if (hd->next != NULL) hd->next->prev = hd;
+    if (hd->next != NULL && hd->next->is_free) {
+        hd->size = hd->size + hd->next->size + sizeof(t_header);
+        hd->next = hd->next->next;
+        if (hd->next != NULL) hd->next->prev = hd;
 
-		if (hd->prev == NULL && hd->next == NULL) {
-			ft_free_page(hd - 1, h);
-			return;
-		}
-	}
+        if (hd->prev == NULL && hd->next == NULL) {
+            ft_free_page(hd - 1, h);
+            return;
+        }
+    }
 
-	if (hd->prev != NULL && hd->prev->is_free) {
-		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
-		hd->prev->next = hd->next;
-		if (hd->next != NULL) hd->next->prev = hd->prev;
+    if (hd->prev != NULL && hd->prev->is_free) {
+        hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
+        hd->prev->next = hd->next;
+        if (hd->next != NULL) hd->next->prev = hd->prev;
 
-		if (hd->prev->prev == NULL && hd->prev->next == NULL) {
-			ft_free_page(hd->prev - 1, h);
-			return;
-		}
-	}
+        if (hd->prev->prev == NULL && hd->prev->next == NULL) {
+            ft_free_page(hd->prev - 1, h);
+            return;
+        }
+    }
 
 }
 
+static t_bool ft_is_in_headers(void *ptr, t_header *h) {
+    if (h == NULL) return FALSE;
+    if (h + 1 == ptr) return TRUE;
+    return ft_is_in_headers(ptr, h->next);
+}
+
+static t_bool ft_is_in_page(void *ptr, t_header *h) {
+    if (h == NULL) return FALSE;
+    if (ft_is_in_headers(ptr, h + 1)) return TRUE;
+    return ft_is_in_page(ptr, h->next);
+}
+
 void free(void *ptr) {
-	/*
-	if (mutex_need_init) {
-		mutex_need_init = pthread_mutex_init(&lock, NULL);
-	}
-	pthread_mutex_lock(&lock);
-	*/
-	if (ptr == NULL) return;
+    // write(1, "free:", 5);
+    // ft_putnbr_hex((size_t) ptr);
+    // write(1, "\n", 1);
 
-	t_header *hdop = ptr;
-	hdop--;
+    if (ptr == NULL) return;
 
-	if (hdop->enum_page_size == ENUM_PAGE_SIZE_LARGE) {
-		ft_free_page(
-				hdop,
-				&(g_state.large)
-		);
-	} else if (hdop->enum_page_size == ENUM_PAGE_SIZE_SMALL) {
-		ft_free_data(
-				hdop,
-				&(g_state.small)
-		);
-	} else {
-		ft_free_data(
-				hdop,
-				&(g_state.tiny)
-		);
-	}
+    t_header *hdop = ptr;
 
-	// pthread_mutex_unlock(&lock);
+    if (ft_is_in_headers(ptr, g_state.large)) {
+        ft_free_page(
+                hdop - 1,
+                &(g_state.large)
+        );
+    } else if (ft_is_in_page(ptr, g_state.small)) {
+        ft_free_data(
+                hdop - 1,
+                &(g_state.small)
+        );
+    } else if (ft_is_in_page(ptr, g_state.tiny)) {
+        ft_free_data(
+                hdop - 1,
+                &(g_state.tiny)
+        );
+    }
+    // write(1, "end free\n", 9);
 }

@@ -182,13 +182,7 @@ static void *ft_malloc_large(size_t size, t_header **h) {
 }
 
 void *malloc(size_t size) {
-	/*
-	if (mutex_need_init) {
-		mutex_need_init = pthread_mutex_init(&lock, NULL);
-	}
-
-	pthread_mutex_lock(&lock);
-	*/
+	// write(1, "malloc\n", 7);
 	void *res = NULL;
 
 	if (size <= PAGE_TINY_DATA_SIZE) {
@@ -208,6 +202,9 @@ void *malloc(size_t size) {
 		);
 	}
 
-	// pthread_mutex_unlock(&lock);
+	// write(1, "end malloc:", 11);
+	// ft_putnbr_hex((size_t)res);
+	// write(1, "\n", 1);
+
 	return res;
 }
