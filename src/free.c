@@ -42,8 +42,7 @@ static void		ft_free_data(t_header *hd, t_header **h)
 	{
 		hd->size = hd->size + hd->next->size + sizeof(t_header);
 		hd->next = hd->next->next;
-		if (hd->next != NULL)
-			hd->next->prev = hd;
+		(hd->next != NULL) && (hd->next->prev = hd);
 		if (hd->prev == NULL && hd->next == NULL)
 		{
 			ft_free_page(hd - 1, h);
@@ -54,8 +53,7 @@ static void		ft_free_data(t_header *hd, t_header **h)
 	{
 		hd->prev->size = hd->prev->size + hd->size + sizeof(t_header);
 		hd->prev->next = hd->next;
-		if (hd->next != NULL)
-			hd->next->prev = hd->prev;
+		(hd->next != NULL) && (hd->next->prev = hd->prev);
 		if (hd->prev->prev == NULL && hd->prev->next == NULL)
 		{
 			ft_free_page(hd->prev - 1, h);

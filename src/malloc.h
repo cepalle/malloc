@@ -81,5 +81,7 @@ void							*ft_move_ptr(void *ptr, size_t len);
 void							ft_putnbr(int n);
 void							ft_putnbr_hex(size_t n);
 void							ft_putchar_fd(char c, int fd);
+void							*ft_malloc_tiny(size_t size, t_header **h);
+void							*ft_malloc_small(size_t size, t_header **h);
 
 #endif

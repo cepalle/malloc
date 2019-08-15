@@ -14,20 +14,10 @@
 #include <unistd.h>
 #include "malloc.h"
 
-void	*realloc(void *ptr, size_t size)
+static void	*realloc_aux(t_header *hd, void *ptr, size_t size)
 {
-	t_header *hd;
 	t_header *new_mem;
 
-	if (ptr == NULL)
-		return (malloc(size));
-	if (size == 0)
-	{
-		free(ptr);
-		return (NULL);
-	}
-	hd = ptr;
-	hd--;
 	if (hd->size >= size)
 		return (ptr);
 	if (hd->enum_page_size != ENUM_PAGE_SIZE_LARGE &&
@@ -46,4 +36,16 @@ void	*realloc(void *ptr, size_t size)
 	ft_memmove(new_mem, ptr, ft_min(hd->size, (new_mem - 1)->size));
 	free(ptr);
 	return (new_mem);
+}
+
+void		*realloc(void *ptr, size_t size)
+{
+	if (ptr == NULL)
+		return (malloc(size));
+	if (size == 0)
+	{
+		free(ptr);
+		return (NULL);
+	}
+	return (realloc_aux(((t_header *)ptr) - 1, ptr, size));
 }
