@@ -14,6 +14,7 @@ static void ft_free_page(t_header *hp, t_header **h) {
     }
 
     munmap(hp, hp->size + sizeof(t_header));
+    // write(1, "munmap\n", 7);
 }
 
 static void ft_free_data(t_header *hd, t_header **h) {

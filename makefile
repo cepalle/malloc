@@ -27,6 +27,11 @@ FLAGS= -Wall -Wextra -fPIC
 
 # export LD_PRELOAD=./libft_malloc.so
 
+# /usr/bin/time -l ls
+
+
+# .h and .so
+
 all:
 	gcc -shared -o libft_malloc.so $(FLAGS) $(SRC)
 

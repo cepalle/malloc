@@ -26,19 +26,19 @@ typedef unsigned char t_bool;
 typedef struct s_mem_large t_mem_large;
 
 struct s_header {
-	struct s_header *next;
-	struct s_header *prev;
-	size_t size;
-	t_bool is_free;
-	unsigned char enum_page_size;
+    struct s_header *next;
+    struct s_header *prev;
+    size_t size;
+    t_bool is_free;
+    unsigned char enum_page_size;
 };
 
 typedef struct s_header t_header;
 
 struct s_malloc_root {
-	t_header *tiny;
-	t_header *small;
-	t_header *large;
+    t_header *tiny;
+    t_header *small;
+    t_header *large;
 };
 
 typedef struct s_malloc_root t_malloc_root;
