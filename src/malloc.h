@@ -46,8 +46,6 @@ typedef struct s_malloc_root t_malloc_root;
 typedef struct s_header_data t_header_data;
 
 extern t_malloc_root g_state;
-extern pthread_mutex_t lock;
-extern t_bool mutex_need_init;
 
 // ---
 

@@ -53,20 +53,20 @@ static void		ft_free_data(t_header *hd, t_header **h)
 
 static t_bool	ft_is_in_headers(void *ptr, t_header *h)
 {
-    if (h == NULL)
-    	return (FALSE);
-    if (h + 1 == ptr)
-    	return (TRUE);
-    return (ft_is_in_headers(ptr, h->next));
+	if (h == NULL)
+		return (FALSE);
+	if (h + 1 == ptr)
+		return (TRUE);
+	return (ft_is_in_headers(ptr, h->next));
 }
 
 static t_bool	ft_is_in_page(void *ptr, t_header *h)
 {
-    if (h == NULL)
-    	return (FALSE);
-    if (ft_is_in_headers(ptr, h + 1))
-    	return (TRUE);
-    return (ft_is_in_page(ptr, h->next));
+	if (h == NULL)
+		return (FALSE);
+	if (ft_is_in_headers(ptr, h + 1))
+		return (TRUE);
+	return (ft_is_in_page(ptr, h->next));
 }
 
 void			free(void *ptr)
@@ -74,27 +74,18 @@ void			free(void *ptr)
 	t_header *hdop;
 
 	hdop = ptr;
-    if (ptr == NULL)
-    	return;
-    if (ft_is_in_headers(ptr, g_state.large))
-    {
-        ft_free_page(
-                hdop - 1,
-                &(g_state.large)
-        );
-    }
-    else if (ft_is_in_page(ptr, g_state.small))
-    {
-        ft_free_data(
-                hdop - 1,
-                &(g_state.small)
-        );
-    }
-    else if (ft_is_in_page(ptr, g_state.tiny))
-    {
-        ft_free_data(
-                hdop - 1,
-                &(g_state.tiny)
-        );
-    }
+	if (ptr == NULL)
+		return ;
+	if (ft_is_in_headers(ptr, g_state.large))
+	{
+		ft_free_page(hdop - 1, &(g_state.large));
+	}
+	else if (ft_is_in_page(ptr, g_state.small))
+	{
+		ft_free_data(hdop - 1, &(g_state.small));
+	}
+	else if (ft_is_in_page(ptr, g_state.tiny))
+	{
+		ft_free_data(hdop - 1, &(g_state.tiny));
+	}
 }
