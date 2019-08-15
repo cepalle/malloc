@@ -1,5 +1,0 @@
-test:
-- show_alloc_mem
-- free (unmap)
-
-norme

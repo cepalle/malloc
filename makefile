@@ -3,6 +3,8 @@ SRC = src/calloc.c\
     src/free.c\
     src/global_state.c\
     src/malloc.c\
+    src/malloc_tiny.c\
+    src/malloc_small.c\
     src/realloc.c\
     src/reallocf.c\
     src/util.c\
