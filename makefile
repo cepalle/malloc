@@ -14,6 +14,9 @@ SRC = src/calloc.c\
 
 FLAGS= -Wall -Wextra -fPIC
 
+ifeq ($(HOSTTYPE),)
+    HOSTTYPE := $(shell uname -m)_$(shell uname -s)
+endif
 
 
 # nm malloc.so
@@ -37,5 +40,9 @@ FLAGS= -Wall -Wextra -fPIC
 # .h and .so
 
 all:
-	gcc -shared -o libft_malloc.so $(FLAGS) $(SRC)
+	gcc -shared -o libft_malloc_$(HOSTTYPE).so $(FLAGS) $(SRC)
+	ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so
 
+clean:
+	rm libft_malloc_$(HOSTTYPE).so libft_malloc.so
+	
