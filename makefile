@@ -12,12 +12,13 @@ SRC = src/calloc.c\
     src/util3.c\
     src/valloc.c
 
+OBJ = $(SRC:.c=.o)
+
 FLAGS= -Wall -Wextra -fPIC
 
 ifeq ($(HOSTTYPE),)
     HOSTTYPE := $(shell uname -m)_$(shell uname -s)
 endif
-
 
 # nm malloc.so
 
@@ -36,12 +37,15 @@ endif
 
 # /usr/bin/time -l ls
 
-
 # .h and .so
 
-all:
-	gcc -shared -o libft_malloc_$(HOSTTYPE).so $(FLAGS) $(SRC)
+all: $(OBJ)
+	gcc -shared -o libft_malloc_$(HOSTTYPE).so $(FLAGS) $(OBJ)
 	ln -s libft_malloc_$(HOSTTYPE).so libft_malloc.so
+
+$%.o: $%.c src/malloc.h
+	$(CC) -c $< $(CFLAGS) -o $@
 
 clean:
 	rm libft_malloc_$(HOSTTYPE).so libft_malloc.so
+	rm src/*.o

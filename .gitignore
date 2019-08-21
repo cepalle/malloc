@@ -5,3 +5,4 @@ cmake-build-debug/
 main.c
 *.out
 test_malloc
+*.o
