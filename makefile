@@ -45,4 +45,3 @@ all:
 
 clean:
 	rm libft_malloc_$(HOSTTYPE).so libft_malloc.so
-	
