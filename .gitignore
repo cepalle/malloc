@@ -6,3 +6,4 @@ main.c
 *.out
 test_malloc
 *.o
+test5
