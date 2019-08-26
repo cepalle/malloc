@@ -62,7 +62,7 @@ static void		ft_free_data(t_header *hd, t_header **h)
 	}
 }
 
-static t_bool	ft_is_in_headers(void *ptr, t_header *h)
+t_bool			ft_is_in_headers(void *ptr, t_header *h)
 {
 	if (h == NULL)
 		return (FALSE);
@@ -71,7 +71,7 @@ static t_bool	ft_is_in_headers(void *ptr, t_header *h)
 	return (ft_is_in_headers(ptr, h->next));
 }
 
-static t_bool	ft_is_in_page(void *ptr, t_header *h)
+t_bool			ft_is_in_page(void *ptr, t_header *h)
 {
 	if (h == NULL)
 		return (FALSE);

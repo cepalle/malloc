@@ -47,5 +47,11 @@ void		*realloc(void *ptr, size_t size)
 		free(ptr);
 		return (NULL);
 	}
+	if (!ft_is_in_headers(ptr, g_state.large) &&
+		!ft_is_in_page(ptr, g_state.small) &&
+		!ft_is_in_page(ptr, g_state.tiny))
+	{
+		return (NULL);
+	}
 	return (realloc_aux(((t_header *)ptr) - 1, ptr, size));
 }

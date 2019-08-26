@@ -18,11 +18,11 @@
 # include <sys/mman.h>
 # include <pthread.h>
 
-# define PAGE_TINY_SIZE         (1024 * 1024 * 2)
+# define PAGE_TINY_SIZE         (512 * getpagesize())
 # define PAGE_TINY_RES          16
 # define PAGE_TINY_DATA_SIZE    (1024 - sizeof(t_header) - PAGE_TINY_RES + 1)
 
-# define PAGE_SMALL_SIZE        (4096 * 4096)
+# define PAGE_SMALL_SIZE        (4096 * getpagesize())
 # define PAGE_SMALL_RES         512
 # define PAGE_SMALL_DATA_SIZE   (4096*2-sizeof(t_header)-PAGE_SMALL_RES+1)
 
@@ -83,5 +83,7 @@ void							ft_putnbr_hex(size_t n);
 void							ft_putchar_fd(char c, int fd);
 void							*ft_malloc_tiny(size_t size, t_header **h);
 void							*ft_malloc_small(size_t size, t_header **h);
+t_bool							ft_is_in_page(void *ptr, t_header *h);
+t_bool							ft_is_in_headers(void *ptr, t_header *h);
 
 #endif

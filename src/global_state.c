@@ -29,12 +29,15 @@ static void		print_hd(t_header *hd)
 	it = hd;
 	while (it != NULL)
 	{
-		print_add(it + 1);
-		write(1, " - ", 3);
-		print_add(ft_move_ptr(it, it->size + sizeof(t_header)));
-		write(1, " : ", 3);
-		ft_putnbr(it->size);
-		write(1, " octets\n", 8);
+		if (!it->is_free)
+		{
+			print_add(it + 1);
+			write(1, " - ", 3);
+			print_add(ft_move_ptr(it, it->size + sizeof(t_header)));
+			write(1, " : ", 3);
+			ft_putnbr(it->size);
+			write(1, " octets\n", 8);
+		}
 		it = it->next;
 	}
 }
@@ -48,15 +51,15 @@ static void		print_hp(t_header *hp)
 	{
 		if (it->enum_page_size == ENUM_PAGE_SIZE_LARGE)
 		{
-			write(1, "LARGE : \n", 9);
+			write(1, "LARGE : ", 8);
 		}
 		else if (it->enum_page_size == ENUM_PAGE_SIZE_SMALL)
 		{
-			write(1, "SMALL : \n", 9);
+			write(1, "SMALL : ", 8);
 		}
 		else
 		{
-			write(1, "TINY : \n", 8);
+			write(1, "TINY : ", 7);
 		}
 		print_add(it);
 		write(1, "\n", 1);

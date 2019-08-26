@@ -14,7 +14,7 @@ SRC = src/calloc.c\
 
 OBJ = $(SRC:.c=.o)
 
-FLAGS= -Wall -Wextra -fPIC
+FLAGS= -Wall -Wextra -Werror
 
 ifeq ($(HOSTTYPE),)
     HOSTTYPE := $(shell uname -m)_$(shell uname -s)
@@ -47,5 +47,11 @@ $%.o: $%.c src/malloc.h
 	$(CC) -c $< $(CFLAGS) -o $@
 
 clean:
-	rm libft_malloc_$(HOSTTYPE).so libft_malloc.so
-	rm src/*.o
+	rm -f src/*.o
+
+fclean: clean
+	rm -f libft_malloc_$(HOSTTYPE).so libft_malloc.so
+
+re: fclean all
+
+.PHONY: clean all fclean re
