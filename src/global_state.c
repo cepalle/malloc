@@ -11,7 +11,7 @@
 /*                                                        /                   */
 /* ************************************************************************** */
 
-#include <zconf.h>
+#include <unistd.h>
 #include "malloc.h"
 
 t_malloc_root g_state = {NULL, NULL, NULL};
@@ -64,7 +64,7 @@ static void		print_hp(t_header *hp)
 		print_add(it);
 		write(1, "\n", 1);
 		print_hd(it + 1);
-		it = hp->next;
+		it = it->next;
 	}
 }
 

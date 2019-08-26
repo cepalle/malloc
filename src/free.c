@@ -23,14 +23,15 @@ static void		ft_free_page(t_header *hp, t_header **h)
 		hp->prev->next = hp->next;
 		if (hp->next != NULL)
 			hp->next->prev = hp->prev;
+		munmap(hp, hp->size + sizeof(t_header));
 	}
-	else
+	else if (hp->next != NULL)
 	{
 		*h = hp->next;
 		if (hp->next != NULL)
 			hp->next->prev = NULL;
+		munmap(hp, hp->size + sizeof(t_header));
 	}
-	munmap(hp, hp->size + sizeof(t_header));
 }
 
 static void		ft_free_data(t_header *hd, t_header **h)

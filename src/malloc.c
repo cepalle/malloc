@@ -19,7 +19,7 @@ static void	*ft_malloc_large_page(size_t size)
 	size_t		align;
 	t_header	*new_mem;
 
-	align = ft_align_size(size + sizeof(t_header), 4096);
+	align = ft_align_size(size + sizeof(t_header), getpagesize());
 	new_mem = ft_mmap(align);
 	if (new_mem == NULL)
 		return (NULL);
@@ -51,7 +51,7 @@ static void	*ft_malloc_large(size_t size, t_header **h)
 			it = it->next;
 		}
 		it->next = new_page;
-		it->next->prev = it;
+		new_page->prev = it;
 	}
 	return (new_page + 1);
 }
