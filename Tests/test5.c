@@ -17,11 +17,18 @@ void show_alloc_mem(void);
 
 int	main(void)
 {
-	malloc(1024);
-	malloc(1024 * 32);
-	malloc(1024 * 1024);
-	malloc(1024 * 1024 * 16);
-	malloc(1024 * 1024 * 128);
+	void *a = malloc(1024);
+	void *b = malloc(1024 * 32);
+	void *c = malloc(1024 * 1024);
+	void *d = malloc(1024 * 1024 * 16);
+	void *e = malloc(1024 * 1024 * 128);
+	show_alloc_mem();
+	free(a);
+	free(b);
+	free(c);
+	free(d);
+	free(e);
+	write(1, "\n", 1);
 	show_alloc_mem();
 	return (0);
 }

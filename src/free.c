@@ -32,6 +32,11 @@ static void		ft_free_page(t_header *hp, t_header **h)
 			hp->next->prev = NULL;
 		munmap(hp, hp->size + sizeof(t_header));
 	}
+	else if (hp->enum_page_size == ENUM_PAGE_SIZE_LARGE)
+	{
+		munmap(hp, hp->size + sizeof(t_header));
+		*h = NULL;
+	}
 }
 
 static void		ft_free_data(t_header *hd, t_header **h)

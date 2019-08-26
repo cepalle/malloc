@@ -33,13 +33,26 @@ static void		print_hd(t_header *hd)
 		{
 			print_add(it + 1);
 			write(1, " - ", 3);
-			print_add(ft_move_ptr(it, it->size + sizeof(t_header)));
+			print_add(ft_move_ptr(it + 1, it->size + sizeof(t_header)));
 			write(1, " : ", 3);
 			ft_putnbr(it->size);
 			write(1, " octets\n", 8);
 		}
 		it = it->next;
 	}
+}
+
+static void		print_norm_aux(t_header *it)
+{
+	write(1, "LARGE : ", 8);
+	print_add(it);
+	write(1, "\n", 1);
+	print_add(it + 1);
+	write(1, " - ", 3);
+	print_add(ft_move_ptr(it + 1, it->size + sizeof(t_header)));
+	write(1, " : ", 3);
+	ft_putnbr(it->size);
+	write(1, " octets\n", 8);
 }
 
 static void		print_hp(t_header *hp)
@@ -50,20 +63,17 @@ static void		print_hp(t_header *hp)
 	while (it != NULL)
 	{
 		if (it->enum_page_size == ENUM_PAGE_SIZE_LARGE)
-		{
-			write(1, "LARGE : ", 8);
-		}
-		else if (it->enum_page_size == ENUM_PAGE_SIZE_SMALL)
-		{
-			write(1, "SMALL : ", 8);
-		}
+			print_norm_aux(it);
 		else
 		{
-			write(1, "TINY : ", 7);
+			if (it->enum_page_size == ENUM_PAGE_SIZE_SMALL)
+				write(1, "SMALL : ", 8);
+			else
+				write(1, "TINY : ", 7);
+			print_add(it);
+			write(1, "\n", 1);
+			print_hd(it + 1);
 		}
-		print_add(it);
-		write(1, "\n", 1);
-		print_hd(it + 1);
 		it = it->next;
 	}
 }
