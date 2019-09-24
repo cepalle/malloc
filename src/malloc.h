@@ -6,7 +6,7 @@
 /*   By: cepalle <marvin@le-101.fr>                 +:+   +:    +:    +:+     */
 /*                                                 #+#   #+    #+    #+#      */
 /*   Created: 2019/08/15 16:51:23 by cepalle      #+#   ##    ##    #+#       */
-/*   Updated: 2019/08/15 16:51:24 by cepalle     ###    #+. /#+    ###.fr     */
+/*   Updated: 2019/09/24 16:15:38 by cepalle     ###    #+. /#+    ###.fr     */
 /*                                                         /                  */
 /*                                                        /                   */
 /* ************************************************************************** */
@@ -78,7 +78,7 @@ void							*ft_memmove(void *dst, const void *src,
 		size_t len);
 void							*ft_mmap(size_t size);
 void							*ft_move_ptr(void *ptr, size_t len);
-void							ft_putnbr(int n);
+void							ft_putnbr(size_t n);
 void							ft_putnbr_hex(size_t n);
 void							ft_putchar_fd(char c, int fd);
 void							*ft_malloc_tiny(size_t size, t_header **h);
